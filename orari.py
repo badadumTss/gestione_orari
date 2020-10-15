@@ -44,7 +44,6 @@ set {persona1: [lista_orari1], persona2: ...}"""
 # restituisce lista delle persone disponibili all'ora indicata secondo
 # la mappa fornita da orari_di_lavoro
 def interseca(orari_di_lavoro, ora):
-    print(ora.format('d'))
     giorno = giorni_settimana[int(ora.format('d')) - 1]
     orari_giorno = [[persona.replace(':', ''), orari_di_lavoro[persona][giorno]] for persona in orari_di_lavoro]
     disponibilita = {persona.replace(':', ''): False for persona in orari_di_lavoro}
