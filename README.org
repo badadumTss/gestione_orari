@@ -22,8 +22,8 @@
   in =impegni.ics= e fa poi partire ~./main.py~ coi parametri giusti
 ** Main.py
    Dall'ics ricava la mappa degli impegni, e intersecando con l'ora
-   indicata (di default quella corrente), ricava una lista di persone
-   impiegate. dal file ~.or~ ricava un set delle persone indicate coi
+   indicata (di default quella corrente), trova la lista di persone
+   impiegate. dal file ~.or~ crea un set delle persone indicate coi
    rispettivi orari di lavoro, nella forma
    #+BEGIN_SRC python
      {persona: orari}
