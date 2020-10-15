@@ -1,0 +1,37 @@
+* Come usarlo
+  Scrivere in ~orari.or~ gli orari delle persone con la stessa
+  sintassi di quelli già inseriti:
+  #+BEGIN_SRC text
+    Nome:
+	    lun: HH:mm-HH:mm
+	    mar: HH:mm-HH:mm
+	    mer: HH:mm-HH:mm
+	    gio: HH:mm-HH:mm
+	    ven: HH:mm-HH:mm
+  #+END_SRC
+  ogni giorno può avere più turni, non ho testato se possono mancare
+  dei giorni, ma credo di si, ma in caso dovrebbe essere semplice
+  sistemare. Una volta inseriti i turni di ogni persona basta avviare
+  lo script
+  #+BEGIN_SRC sh
+    ./run.sh
+  #+END_SRC
+  che sioccupa di scaricare l'ics dal link che mi hai dato e avviare il programma
+* Come funziona
+  Il file ~run.sh~ scarica il file con gli impegni messi a calendario
+  in =impegni.ics= e fa poi partire ~./main.py~ coi parametri giusti
+** Main.py
+   Dall'ics ricava la mappa degli impegni, e intersecando con l'ora
+   indicata (di default quella corrente), ricava una lista di persone
+   impiegate. dal file ~.or~ ricava un set delle persone indicate coi
+   rispettivi orari di lavoro, nella forma
+   #+BEGIN_SRC python
+     {persona: orari}
+     # o meglio:
+     {'persona': [[inizio_turno1 fine_turno1], [inizio_turno2, fineturno2], ...]}
+   #+END_SRC
+   dal set degli orari di lavoro trova poi una lista delle persone di turno tramite
+   #+BEGIN_SRC python
+     interseca(orari_di_lavoro, ora)
+   #+END_SRC
+   in base anche a quella che è l'ora corrente.
