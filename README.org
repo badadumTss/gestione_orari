@@ -19,7 +19,11 @@
   che sioccupa di scaricare l'ics dal link che mi hai dato e avviare il programma
 * Come funziona
   Il file ~run.sh~ scarica il file con gli impegni messi a calendario
-  in =impegni.ics= e fa poi partire ~./main.py~ coi parametri giusti
+  in =impegni.ics= e fa poi partire ~./main.py~ coi parametri
+  giusti. In output fornisce il set di persone attualmente di turno,
+  con l'indicatore True o False a seconda che siano disponibili o meno
+  (il formato è quello dei set in python che è assimilabile al json
+  per un parsing rapido in php7 o js)
 ** Main.py
    Dall'ics ricava la mappa degli impegni, e intersecando con l'ora
    indicata (di default quella corrente), trova la lista di persone
