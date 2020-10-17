@@ -8,15 +8,16 @@
 	    mer: HH:mm-HH:mm
 	    gio: HH:mm-HH:mm
 	    ven: HH:mm-HH:mm
+	    sab: HH:mm-HH:mm
+	    dom: HH:mm-HH:mm
   #+END_SRC
-  ogni giorno può avere più turni, non ho testato se possono mancare
-  dei giorni, ma credo di si, ma in caso dovrebbe essere semplice
-  sistemare. Una volta inseriti i turni di ogni persona basta avviare
-  lo script
+  ogni giorno può avere più turni, i giorni devono comparire tutti,
+  eventualmente vuoti. Una volta inseriti i turni di ogni persona
+  basta avviare lo script
   #+BEGIN_SRC sh
     ./run.sh
   #+END_SRC
-  che sioccupa di scaricare l'ics dal link che mi hai dato e avviare il programma
+  che sioccupa di scaricare l'ics e avviare il programma
 * Come funziona
   Il file ~run.sh~ scarica il file con gli impegni messi a calendario
   in =impegni.ics= e fa poi partire ~./main.py~ coi parametri

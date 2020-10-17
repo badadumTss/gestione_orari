@@ -51,10 +51,11 @@ def interseca(orari_di_lavoro, ora):
         nome_persona = persona[0].replace(':', '')
         orari_persona = persona[1]
         for turno in orari_persona:
-            inizio_turno = arrow.get(ora.format('YYYY-MM-DD ') + turno[0])
-            fine_turno = arrow.get(ora.format('YYYY-MM-DD ') + turno[1])
-            if ora >= inizio_turno and ora < fine_turno:
-                disponibilita[nome_persona] = True
+            if len(turno) > 1:
+                inizio_turno = arrow.get(ora.format('YYYY-MM-DD ') + turno[0])
+                fine_turno = arrow.get(ora.format('YYYY-MM-DD ') + turno[1])
+                if ora >= inizio_turno and ora < fine_turno:
+                    disponibilita[nome_persona] = True
 
     disponibili = []
     for persona in disponibilita:
