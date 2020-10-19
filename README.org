@@ -11,9 +11,10 @@
 	    sab: HH:mm-HH:mm
 	    dom: HH:mm-HH:mm
   #+END_SRC
-  ogni giorno può avere più turni, i giorni devono comparire tutti,
-  eventualmente vuoti. Una volta inseriti i turni di ogni persona
-  basta avviare lo script
+  ogni giorno può avere più turni, i giorni non devono comparire
+  tutti, se una giornata non è presente la persona non è presente in
+  quella giornata. Una volta inseriti i turni di ogni persona basta
+  avviare lo script
   #+BEGIN_SRC sh
     ./run.sh
   #+END_SRC
