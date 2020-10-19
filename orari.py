@@ -22,7 +22,7 @@ set {persona1: [lista_orari1], persona2: ...}"""
     # {'giorno': [[orario1] [orario2] ...]} alla fine viene fuori una
     # mappa che associa al nome di ogni persona il suo turno di lavoro
     for persona in persone:
-        nome_persona = persona[0].replace('\n','')
+        nome_persona = persona[0].replace('\n','').replace(':', '')
         orari.setdefault(nome_persona, {})
         # Dalla seconda entry in poi di ogni persona vengono definiti
         # i giorni lavorativi coi relativi turni
@@ -49,9 +49,9 @@ def interseca(orari_di_lavoro, ora):
     
     for persona in orari_di_lavoro:
         if giorno in orari_di_lavoro[persona]:
-            orari_giorno.append([persona.replace(':', ''), orari_di_lavoro[persona][giorno]])
+            orari_giorno.append([persona, orari_di_lavoro[persona][giorno]])
     
-    disponibilita = {persona.replace(':', ''): False for persona in orari_di_lavoro}
+    disponibilita = {persona: False for persona in orari_di_lavoro}
     
     for persona in orari_giorno:
         nome_persona = persona[0].replace(':', '')
