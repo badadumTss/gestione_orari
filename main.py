@@ -32,8 +32,11 @@ def main(file_orario, file_impegni, ora = arrow.now()):
             disponibilita[persona] = True
     
     # DEBUG
-    # print(impegni)
-    # print(impegnati)
+    #print('orari_di_lavoro')
+    #print(orari_di_lavoro)
+    #print('di_turno')
+    #print(di_turno)
+    #print('disponibilita')
     print(disponibilita)
             
 if __name__ == "__main__":
