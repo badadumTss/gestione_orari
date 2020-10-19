@@ -10,7 +10,7 @@ set {persona1: [lista_orari1], persona2: ...}"""
     orari_lines = open(orari_file).readlines()
     size = len(orari_lines)
     idx_list = [idx + 1 for idx, val in
-                enumerate(orari_lines) if val == '\n'] 
+                enumerate(orari_lines) if val == '\n']
     persone = [orari_lines[i: j-1] for i, j in
                zip([0] + idx_list, idx_list + 
                    ([size] if idx_list[-1] != size else []))] 
@@ -45,8 +45,14 @@ set {persona1: [lista_orari1], persona2: ...}"""
 # la mappa fornita da orari_di_lavoro
 def interseca(orari_di_lavoro, ora):
     giorno = giorni_settimana[int(ora.format('d')) - 1]
-    orari_giorno = [[persona.replace(':', ''), orari_di_lavoro[persona][giorno]] for persona in orari_di_lavoro]
+    orari_giorno = []
+    
+    for persona in orari_di_lavoro:
+        if giorno in orari_di_lavoro[persona]:
+            orari_giorno.append([persona.replace(':', ''), orari_di_lavoro[persona][giorno]])
+    
     disponibilita = {persona.replace(':', ''): False for persona in orari_di_lavoro}
+    
     for persona in orari_giorno:
         nome_persona = persona[0].replace(':', '')
         orari_persona = persona[1]
