@@ -18,12 +18,12 @@ def main(file_orario, file_impegni, ora = arrow.now()):
     orari_di_lavoro = load_orari(file_orario)
     di_turno = interseca(orari_di_lavoro, ora)
 
-    impegnati = []
+    impegnati = {}
     for persona in impegni:
         for impegno in impegni[persona]:
             if impegno.begin <= ora and impegno.end > ora:
-                impegnati.append(persona.replace(' ', ''))
-
+                impegnati[persona] = impegno.description
+                
     disponibilita = {persona: 'Non in servizio' for persona in orari_di_lavoro}
 
     for persona in di_turno:
@@ -32,7 +32,7 @@ def main(file_orario, file_impegni, ora = arrow.now()):
     for persona in impegnati:
         # una persona può avere più impegni, riposto la descrizione
         # del primo trovato
-        disponibilita[persona] = impegni[persona][0].description
+        disponibilita[persona] = impegnati[persona]
     
     print(disponibilita)
             

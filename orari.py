@@ -10,7 +10,7 @@ set {persona1: [lista_orari1], persona2: ...}"""
     orari_lines = open(orari_file).readlines()
     size = len(orari_lines)
     idx_list = [idx + 1 for idx, val in
-                enumerate(orari_lines) if val == '\n']
+                enumerate(orari_lines) if val == '\n' or idx == len(orari_lines)]
     persone = [orari_lines[i: j-1] for i, j in
                zip([0] + idx_list, idx_list + 
                    ([size] if idx_list[-1] != size else []))] 
@@ -53,13 +53,14 @@ def interseca(orari_di_lavoro, ora):
 
     disponibilita = {persona: False for persona in orari_di_lavoro}
     
+    fuso = '+02:00'
     for persona in orari_giorno:
         nome_persona = persona[0].replace(':', '')
         orari_persona = persona[1]
         for turno in orari_persona:
             if len(turno) > 1:
-                inizio_turno = arrow.get(ora.format('YYYY-MM-DD ') + turno[0] + '+02:00')
-                fine_turno = arrow.get(ora.format('YYYY-MM-DD ') + turno[1] + '+02:00')
+                inizio_turno = arrow.get(ora.format('YYYY-MM-DD ') + turno[0]  + fuso)
+                fine_turno = arrow.get(ora.format('YYYY-MM-DD ') + turno[1] + fuso)
                 if ora >= inizio_turno and ora < fine_turno:
                     disponibilita[nome_persona] = True
 
