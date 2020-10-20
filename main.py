@@ -30,19 +30,17 @@ def main(file_orario, file_impegni, ora = arrow.now()):
         disponibilita[persona] = 'in servizio'
 
     for persona in impegnati:
+        # una persona può avere più impegni, riposto la descrizione
+        # del primo trovato
         disponibilita[persona] = impegni[persona][0].description
     
-    # DEBUG
-    #print('orari_di_lavoro')
-    #print(orari_di_lavoro)
-    #print('di_turno')
-    #print(di_turno)
-    #print('disponibilita')
     print(disponibilita)
             
 if __name__ == "__main__":
     if(len(sys.argv) < 3):
-        print("""help: [nome_script] file_orari.or file_impegni.ics [timestamp "+%Y-%m-%dT%H:%m"]""")
+        print("""
+        help: [nome_script] file_orari.or file_impegni.ics [timestamp "+%Y-%m-%dT%H:%m"]
+        """)
     else:
         if(len(sys.argv) < 4):
             main(sys.argv[1], sys.argv[2])
