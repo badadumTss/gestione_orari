@@ -24,12 +24,13 @@ def main(file_orario, file_impegni, ora = arrow.now()):
             if impegno.begin <= ora and impegno.end > ora:
                 impegnati.append(persona.replace(' ', ''))
 
-    disponibilita = {}
+    disponibilita = {persona: 'Non in servizio' for persona in orari_di_lavoro}
+
     for persona in di_turno:
-        if persona in impegnati:
-            disponibilita[persona] = False
-        else:
-            disponibilita[persona] = True
+        disponibilita[persona] = 'in servizio'
+
+    for persona in impegnati:
+        disponibilita[persona] = impegni[persona][0].description
     
     # DEBUG
     #print('orari_di_lavoro')
