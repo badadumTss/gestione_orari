@@ -1,10 +1,12 @@
-#!/bin/env python3
+#!/usr/bin/python3
+
 import sys
 import arrow
 from ics import Calendar, Event
 from orari import *
 
-def main(file_orario, file_impegni, ora = arrow.now()):
+def main(file_orario, file_impegni, ora: str = arrow.now().format('YYYY-MM-DD HH:mm')):
+    ora = arrow.get(ora)
     cal_impegni = Calendar(open(file_impegni).read())
     
     impegni = {}
