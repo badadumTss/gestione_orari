@@ -8,12 +8,12 @@ set {persona1: [lista_orari1], persona2: ...}"""
     # Carica il file orari_file e rompe la lista di readlines() in
     # chunck in base alle linee vuote
     orari_lines = open(orari_file).readlines()
-    size = len(orari_lines)
+    size = len(orari_lines) + 1
     idx_list = [idx + 1 for idx, val in
-                enumerate(orari_lines) if val == '\n' or idx == len(orari_lines)]
+                enumerate(orari_lines) if val == '\n']
     persone = [orari_lines[i: j-1] for i, j in
-               zip([0] + idx_list, idx_list + 
-                   ([size] if idx_list[-1] != size else []))] 
+               zip([0] + idx_list, 
+                   idx_list + ([size] if idx_list[-1] != size else []))] 
     orari = {}
     # Implementa un parsing molto semplice a partire dalla lista
     # persone di prima, ogni elemento della lista è visto come una
@@ -43,7 +43,7 @@ set {persona1: [lista_orari1], persona2: ...}"""
 
 # restituisce lista delle persone disponibili all'ora indicata secondo
 # la mappa fornita da orari_di_lavoro
-def interseca(orari_di_lavoro, ora):
+def interseca(orari_di_lavoro: set, ora):
     giorno = giorni_settimana[int(ora.format('d')) - 1]
     orari_giorno = []
     
@@ -53,14 +53,13 @@ def interseca(orari_di_lavoro, ora):
 
     disponibilita = {persona: False for persona in orari_di_lavoro}
     
-    fuso = '+02:00'
     for persona in orari_giorno:
         nome_persona = persona[0].replace(':', '')
         orari_persona = persona[1]
         for turno in orari_persona:
             if len(turno) > 1:
-                inizio_turno = arrow.get(ora.format('YYYY-MM-DD ') + turno[0]  + fuso)
-                fine_turno = arrow.get(ora.format('YYYY-MM-DD ') + turno[1] + fuso)
+                inizio_turno = arrow.get(ora.format('YYYY-MM-DDT') + turno[0])
+                fine_turno = arrow.get(ora.format('YYYY-MM-DDT') + turno[1])
                 if ora >= inizio_turno and ora < fine_turno:
                     disponibilita[nome_persona] = True
 

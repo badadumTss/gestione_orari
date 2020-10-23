@@ -18,6 +18,7 @@ def main(file_orario, file_impegni, ora: str = arrow.now().format('YYYY-MM-DD HH
     
     # orari_di_lavoro mappa generata in orari.py, interpretata da orari.or
     orari_di_lavoro = load_orari(file_orario)
+    print(orari_di_lavoro)
     di_turno = interseca(orari_di_lavoro, ora)
 
     impegnati = {}
@@ -28,6 +29,7 @@ def main(file_orario, file_impegni, ora: str = arrow.now().format('YYYY-MM-DD HH
                 
     disponibilita = {persona: 'Non in servizio' for persona in orari_di_lavoro}
 
+    print(di_turno)
     for persona in di_turno:
         disponibilita[persona] = 'in servizio'
 
@@ -41,7 +43,7 @@ def main(file_orario, file_impegni, ora: str = arrow.now().format('YYYY-MM-DD HH
 if __name__ == "__main__":
     if(len(sys.argv) < 3):
         print("""
-        help: [nome_script] file_orari.or file_impegni.ics [timestamp "+%Y-%m-%dT%H:%m"]
+        help: [nome_script] file_orari.or file_impegni.ics [timestamp "+%FT%H:%M"]
         """)
     else:
         if(len(sys.argv) < 4):
