@@ -3,11 +3,12 @@
 import sys
 import arrow
 from ics import Calendar, Event
-from orari import *
 
 giorni_settimana = ['lun', 'mar', 'mer', 'gio', 'ven', 'sab', 'dom']
 
-def break_orari(orari_lines: list):
+def break_orari(orari_lines: list) -> list:
+    """Prima parte del parsing, spezza i blocchi ritornando lista di liste
+    dei singoli blocchi (associati ad una persona)"""
     size = len(orari_lines) + 1
     idx_list = [idx + 1 for idx, val in
                 enumerate(orari_lines) if val == '\n']
@@ -17,6 +18,8 @@ def break_orari(orari_lines: list):
     return persone
 
 def get_orari(persone: list) -> set:
+    """Dalla lista dei blocchi ricava la mappa: persona : lista degli
+    orari relativi ai giorni in cui è di turno"""
     orari = {}
     for persona in persone:
         nome_persona = persona[0].replace('\n','').replace(':', '')
@@ -34,11 +37,15 @@ def get_orari(persone: list) -> set:
     return orari
 
 def load_orari(orari_file: str) -> set:
+    """carica il file `orari_file' ritornando la mappa {persona: [lista
+    dei turni giorno per giorno]}"""
     orari_raw = break_orari(open(orari_file).readlines())
     orari = get_orari(orari_raw)
     return orari
 
 def presenti(orari_di_lavoro: set, giorno: str) -> list:
+    """Dagli orari di lavoro e il giorno indicato ritorna la lista di
+    persone presenti"""
     presenti_giorno = []
     for persona in orari_di_lavoro:
         if giorno in orari_di_lavoro[persona]:
@@ -46,6 +53,10 @@ def presenti(orari_di_lavoro: set, giorno: str) -> list:
     return presenti_giorno
 
 def check_disponibilita(presenti_giorno: set, ora: arrow.Arrow, lista_persone: list) -> set:
+    """Dalle persone di turno, l'ora indicata e la lista di tutte le
+    persone ricava una mappa della disponibilità delle persone: chiave:
+    nome persona, valore: booleano che indica se la persona è di turno o
+    meno"""
     disponibilita = {persona: False for persona in lista_persone}
     for persona in presenti_giorno:
         nome_persona = persona[0].replace(':', '')
@@ -59,6 +70,9 @@ def check_disponibilita(presenti_giorno: set, ora: arrow.Arrow, lista_persone: l
     return disponibilita
 
 def disponibili(disponibilita: set) -> list:
+    """Dal set che indica la disponibilità (chiave: nome persona, valore:
+    booleano che indica se è disponibile o meno), ricava una lista di
+    persone al momento disponibili"""
     disponibili = []
     for persona in disponibilita:
         if disponibilita[persona]:
@@ -66,12 +80,17 @@ def disponibili(disponibilita: set) -> list:
     return disponibili
 
 def persone_di_turno(orari_di_lavoro: set, ora: arrow.Arrow) -> list:
+    """Dal set con gli orari din lavoro e l'ora indicata ricava la lista
+    delle persone di turno"""
     giorno = giorni_settimana[int(ora.format('d')) - 1]
     presenti_giorno = presenti(orari_di_lavoro, giorno)
     disponibilita = check_disponibilita(presenti_giorno, ora, [persona for persona in orari_di_lavoro])
     return disponibili(disponibilita)
 
 def get_impegni(cal: Calendar) -> set:
+    """Dal calendario `cal' tira fuori un set elle persone impegnate coi
+    loro impegni: chiave: persona impegnata, valore: lista di eventi che
+    la impegnano (eventi del tipo Event, importato da ics)"""
     impegni = {}
     for impegno in cal.events:
         if impegno.name in impegni:
@@ -81,6 +100,9 @@ def get_impegni(cal: Calendar) -> set:
     return impegni
 
 def get_impegnati(impegni: set, ora: arrow.Arrow) -> set:
+    """Dagli impegni e l'ora specificata tira fuori un set degli
+    impegnati: chiave: nome della persona impegnata, valore: la
+    descrizione dell'impegno"""
     impegnati = {}
     for persona in impegni:
         for impegno in impegni[persona]:
@@ -89,8 +111,8 @@ def get_impegnati(impegni: set, ora: arrow.Arrow) -> set:
     return impegnati
 
 def main(file_orario, file_impegni, ora: str = arrow.now().format('YYYY-MM-DD HH:mm')):
-    ora = arrow.get(ora)
     
+    ora = arrow.get(ora)
     impegni = get_impegni(Calendar(open(file_impegni).read()))
     orari_di_lavoro = load_orari(file_orario)
     di_turno = persone_di_turno(orari_di_lavoro, ora)
