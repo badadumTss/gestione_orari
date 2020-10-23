@@ -18,7 +18,6 @@ def main(file_orario, file_impegni, ora: str = arrow.now().format('YYYY-MM-DD HH
     
     # orari_di_lavoro mappa generata in orari.py, interpretata da orari.or
     orari_di_lavoro = load_orari(file_orario)
-    print(orari_di_lavoro)
     di_turno = interseca(orari_di_lavoro, ora)
 
     impegnati = {}
