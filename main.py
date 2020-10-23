@@ -93,10 +93,11 @@ def get_impegni(cal: Calendar) -> set:
     la impegnano (eventi del tipo Event, importato da ics)"""
     impegni = {}
     for impegno in cal.events:
-        if impegno.name in impegni:
-            impegni[impegno.name].append(impegno)
+        nome_persona = impegno.name.replace(' ', '')
+        if nome_persona in impegni:
+            impegni[nome_persona].append(impegno)
         else:
-            impegni[impegno.name] = [impegno]
+            impegni[nome_persona] = [impegno]
     return impegni
 
 def get_impegnati(impegni: set, ora: arrow.Arrow) -> set:
