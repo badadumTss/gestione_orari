@@ -1,3 +1,6 @@
+#+TITLE:Docs
+#+AUTHOR: Luca Zaninotto
+
 * Dipendenze
   [[https://github.com/C4ptainCrunch/ics.py][Python ics]], per il parsing del file ics e la gesitone degli eventi
 * Come usarlo
@@ -43,3 +46,4 @@
      interseca(orari_di_lavoro, ora)
    #+END_SRC
    in base anche a quella che è l'ora corrente.
+   
