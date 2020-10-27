@@ -1,0 +1,210 @@
+{
+    "Vincenzo": {
+        "lun": [
+            {
+                "start": "08:30",
+                "end": "13:30",
+		"details": "in servizio"
+            },
+            {
+                "start": "13:30",
+                "end": "14:00",
+		"details": "pausa pranzo"
+            },
+            {
+                "start": "14:00",
+                "end": "18:00",
+		"details": "in servizio"
+            }
+        ],
+        "mar": [
+            {
+                "start": "08:30",
+                "end": "13:30",
+		"details": "in servizio"
+            },
+            {
+                "start": "13:30",
+                "end": "14:00",
+		"details": "pausa pranzo"
+            },
+            {
+                "start": "14:00",
+                "end": "18:00",
+		"details": "in servizio"
+            }
+        ],
+        "mer": [
+            {
+                "start": "08:30",
+                "end": "14:30",
+		"details": "in servizio"
+            }
+        ],
+        "gio": [
+            {
+                "start": "08:30",
+                "end": "14:30",
+		"details": "in servizio"
+            }
+        ],
+        "ven": [
+            {
+                "start": "08:30",
+                "end": "14:30",
+		"details": "in servizio"
+            }
+        ]
+    },
+    "Paolo": {
+        "lun": [
+            {
+                "start": "08:30",
+                "end": "14:30",
+		"details": "in servizio"
+            }
+        ],
+        "mar": [
+            {
+                "start": "08:30",
+                "end": "13:30",
+		"details": "in servizio"
+            },
+            {
+                "start": "13:30",
+                "end": "14:00",
+		"details": "pausa pranzo"
+            },
+            {
+                "start": "14:00",
+                "end": "18:00",
+		"details": "in servizio"
+            }
+        ],
+        "mer": [
+            {
+                "start": "08:30",
+                "end": "13:30",
+		"details": "in servizio"
+            },
+            {
+                "start": "13:30",
+                "end": "14:00",
+		"details": "pausa pranzo"
+            },
+            {
+                "start": "14:00",
+                "end": "18:00",
+		"details": "in servizio"
+            }
+        ],
+        "gio": [
+            {
+                "start": "08:30",
+                "end": "14:30",
+		"details": "in servizio"
+            }
+        ],
+        "ven": [
+            {
+                "start": "08:30",
+                "end": "14:30",
+		"details": "in servizio"
+            }
+        ]
+    },
+    "Antonio": {
+        "lun": [
+            {
+                "start": "08:30",
+                "end": "14:30",
+		"details": "in servizio"
+            }
+        ],
+        "mar": [
+            {
+                "start": "08:30",
+                "end": "13:30",
+		"details": "in servizio"
+            },
+            {
+                "start": "13:30",
+                "end": "14:00",
+		"details": "pausa pranzo"
+            },
+            {
+                "start": "14:00",
+                "end": "18:00",
+		"details": "in servizio"
+            }
+        ],
+        "mer": [
+            {
+                "start": "08:30",
+                "end": "14:30",
+		"details": "in servizio"
+            }
+        ],
+        "gio": [
+            {
+                "start": "08:30",
+                "end": "13:30",
+		"details": "in servizio"
+            },
+            {
+                "start": "13:30",
+                "end": "14:00",
+		"details": "pausa pranzo"
+            },
+            {
+                "start": "14:00",
+                "end": "18:00",
+		"details": "in servizio"
+            }
+        ],
+        "ven": [
+            {
+                "start": "08:30",
+                "end": "14:30",
+		"details": "in servizio"
+            }
+        ]
+    },
+    "Mirko": {
+        "lun": [
+            {
+                "start": "11:30",
+                "end": "18:30",
+		"details": "in servizio"
+            }
+        ],
+        "mar": [
+            {
+                "start": "09:00",
+                "end": "16:20",
+		"details": "in servizio"
+            }
+        ],
+        "mer": [
+            {
+                "start": "09:00",
+                "end": "16:20",
+		"details": "in servizio"
+            }
+        ],
+        "gio": [
+            {
+                "start": "11:30",
+                "end": "18:30",
+		"details": "in servizio"
+            }
+        ],
+        "ven": [
+            {
+                "start": "09:00",
+                "end": "16:20",
+		"details": "in servizio"
+            }
+        ]
+    }
+}
