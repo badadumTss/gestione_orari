@@ -76,7 +76,6 @@ def get_impegnati(impegni: set, ora: arrow.Arrow) -> set:
     return impegnati
 
 def main(file_orario, file_impegni, ora: str = arrow.now().format('YYYY-MM-DD HH:mm')):
-    
     ora = arrow.get(ora)
     impegni = get_impegni(Calendar(open(file_impegni).read()))
     orari_di_lavoro = load_orari(file_orario)
