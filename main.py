@@ -7,37 +7,6 @@ from ics import Calendar, Event
 
 giorni_settimana = ['lun', 'mar', 'mer', 'gio', 'ven', 'sab', 'dom']
 
-# def break_orari(orari_lines: list) -> list:
-    # """Prima parte del parsing, spezza i blocchi ritornando lista di liste
-    # dei singoli blocchi (associati ad una persona)"""
-    # size = len(orari_lines) + 1
-    # idx_list = [idx + 1 for idx, val in
-                # enumerate(orari_lines) if val == '\n']
-    # persone = [orari_lines[i: j-1] for i, j in
-               # zip([0] + idx_list, 
-                   # idx_list + ([size] if idx_list[-1] != size else []))] 
-    # return persone
-# 
-# def get_orari(persone: list) -> set:
-    # """Dalla lista dei blocchi ricava la mappa: persona : lista degli
-    # orari relativi ai giorni in cui è di turno"""
-    # orari = {}
-    # for persona in persone:
-        # nome_persona = persona[0].replace('\n','').replace(':', '')
-        # orari.setdefault(nome_persona, {})
-        # for entry in persona[1:]:
-            # giorno_lavorativo = entry.split(': ')
-            # giorno = giorno_lavorativo[0].replace(':','').replace('\t','')
-            # for turno in giorno_lavorativo[1].split(' '):
-                # list_turno = [ora.replace('\n', '') for ora in turno.split('-')]
-                # print(list_turno)
-                # if giorno in orari[nome_persona]:
-                    # orari[nome_persona][giorno].append(list_turno)
-                # else:
-                    # orari[nome_persona].setdefault(giorno,[])
-                    # orari[nome_persona][giorno].append(list_turno)
-    # return orari
-
 def load_orari(orari_file: str) -> set:
     """carica il file `orari_file' ritornando la mappa {persona: [lista
     dei turni giorno per giorno]}"""
@@ -59,11 +28,11 @@ def presenti(orari_di_lavoro: set, giorno: str) -> list:
 def check_disponibilita(presenti_giorno: set, ora: arrow.Arrow, lista_persone: list) -> set:
     """Dalle persone di turno, l'ora indicata e la lista di tutte le
     persone ricava una mappa della disponibilità delle persone: chiave:
-    nome persona, valore: booleano che indica se la persona è di turno o
-    meno"""
+    nome persona, valore: stringa che indica il tipo di turno attivo"""
     disponibilita = {}
     for persona in presenti_giorno:
         nome_persona = persona[0]
+        # Bruttino ma funziona
         orari_persona = persona[1]
         for turno in orari_persona:
             inizio_turno = arrow.get(ora.format('YYYY-MM-DDT') + turno['start'])
@@ -74,17 +43,7 @@ def check_disponibilita(presenti_giorno: set, ora: arrow.Arrow, lista_persone: l
                 disponibilita[nome_persona] = 'non disponibile'
     return disponibilita
 
-# def disponibili(disponibilita: set) -> list:
-    # """Dal set che indica la disponibilità (chiave: nome persona, valore:
-    # booleano che indica se è disponibile o meno), ricava una lista di
-    # persone al momento disponibili"""
-    # disponibili = []
-    # for persona in disponibilita:
-        # if disponibilita[persona]:
-            # disponibili.append(persona)
-    # return disponibili
-
-def persone_di_turno(orari_di_lavoro: set, ora: arrow.Arrow) -> list:
+def turni_correnti(orari_di_lavoro: set, ora: arrow.Arrow) -> list:
     """Dal set con gli orari din lavoro e l'ora indicata ricava la lista
     delle persone di turno"""
     giorno = giorni_settimana[int(ora.format('d')) - 1]
@@ -121,19 +80,13 @@ def main(file_orario, file_impegni, ora: str = arrow.now().format('YYYY-MM-DD HH
     ora = arrow.get(ora)
     impegni = get_impegni(Calendar(open(file_impegni).read()))
     orari_di_lavoro = load_orari(file_orario)
-    di_turno = persone_di_turno(orari_di_lavoro, ora)
-    print(di_turno)
-    # impegnati = get_impegnati(impegni, ora)
+    turni = turni_correnti(orari_di_lavoro, ora)
+    impegnati = get_impegnati(impegni, ora)
 
-    # disponibilita = {persona: 'Non in servizio' for persona in orari_di_lavoro}
- 
-    # for persona in di_turno:
-        # disponibilita[persona] = 'in servizio'
- 
-    # for persona in impegnati:
-        # disponibilita[persona] = impegnati[persona]
+    for persona in impegnati:
+        turni[persona] = impegnati[persona]
 
-    # print(disponibilita)
+    print(turni)
             
 if __name__ == "__main__":
     if(len(sys.argv) < 3):
