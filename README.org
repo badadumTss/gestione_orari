@@ -4,46 +4,32 @@
 * Dipendenze
   [[https://github.com/C4ptainCrunch/ics.py][Python ics]], per il parsing del file ics e la gesitone degli eventi
 * Come usarlo
-  Scrivere in ~orari.or~ gli orari delle persone con la stessa
-  sintassi di quelli già inseriti:
-  #+BEGIN_SRC text
-    Nome:
-	    lun: HH:mm-HH:mm HH:mm-HH:mm
-	    mar: HH:mm-HH:mm HH:mm-HH:mm
-	    mer: HH:mm-HH:mm HH:mm-HH:mm
-	    gio: HH:mm-HH:mm HH:mm-HH:mm
-	    ven: HH:mm-HH:mm HH:mm-HH:mm
-	    sab: HH:mm-HH:mm 
-	    dom: HH:mm-HH:mm
+  ~orari.json~ contiene gli orari delle persone in formato json, il
+  formato è il seguente:
+  #+BEGIN_SRC json
+    {
+	"Nome persona":{
+	    "giorno lavorativo": [
+		{
+		    "start": "orario:inizio"
+		    "end": "orario:fine"
+		    "details": "descrizione evento ricorrente"
+		}
+	    ]
+	}
+    }
   #+END_SRC
-  ogni giorno può avere più turni, i giorni non devono comparire
-  tutti, se una giornata non è presente la persona non è presente in
-  quella giornata. Una volta inseriti i turni di ogni persona basta
-  avviare lo script
+  ogni giorno può avere più turni, i giorni non devono
+  comparire tutti, se una giornata non è presente la persona non è
+  presente in quella giornata. Una volta inseriti i turni di ogni
+  persona basta avviare lo script
   #+BEGIN_SRC sh
     ./run.sh
   #+END_SRC
   che sioccupa di scaricare l'ics e avviare il programma
 * Come funziona
   Il file ~run.sh~ scarica il file con gli impegni messi a calendario
-  in =impegni.ics= e fa poi partire ~./main.py~ coi parametri
-  giusti. In output fornisce il set di persone attualmente di turno,
-  con l'indicatore True o False a seconda che siano disponibili o meno
-  (il formato è quello dei set in python che è assimilabile al json
-  per un parsing rapido in php7 o js)
-** Main.py
-   Dall'ics ricava la mappa degli impegni, e intersecando con l'ora
-   indicata (di default quella corrente), trova la lista di persone
-   impiegate. dal file ~.or~ crea un set delle persone indicate coi
-   rispettivi orari di lavoro, nella forma
-   #+BEGIN_SRC python
-     {persona: orari}
-     # o meglio:
-     {'persona': [[inizio_turno1 fine_turno1], [inizio_turno2, fineturno2], ...]}
-   #+END_SRC
-   dal set degli orari di lavoro trova poi una lista delle persone di turno tramite
-   #+BEGIN_SRC python
-     interseca(orari_di_lavoro, ora)
-   #+END_SRC
-   in base anche a quella che è l'ora corrente.
-   
+  in =impegni.ics= e fa poi partire ~./main.py~ coi parametri giusti,
+  in particolare ~./main.py orari.json impegni.ics~. In output
+  fornisce il set della disponibilità delle persone come indicato dal
+  file degli orari combinato con gli impegni delle singole persone.
