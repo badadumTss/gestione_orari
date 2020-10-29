@@ -59,8 +59,8 @@ def get_impegni(cal: Calendar) -> set:
     for impegno in cal.events:
         nome_persona = impegno.name.replace(' ', '')
         # workaround
-        impegno.begin = impegno.begin.shift(hours=+1)
         impegno.end = impegno.end.shift(hours=+1)
+        impegno.begin = impegno.begin.shift(hours=+1)
         if nome_persona in impegni:
             impegni[nome_persona].append(impegno)
         else:
