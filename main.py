@@ -43,7 +43,7 @@ def check_disponibilita(presenti_giorno: set, ora: arrow.Arrow, lista_persone: l
                 disponibilita[nome_persona] = 'non disponibile'
     return disponibilita
 
-def turni_correnti(orari_di_lavoro: set, ora: arrow.Arrow) -> list:
+def get_disponibilita(orari_di_lavoro: set, ora: arrow.Arrow) -> list:
     """Dal set con gli orari din lavoro e l'ora indicata ricava la lista
     delle persone di turno"""
     giorno = giorni_settimana[int(ora.format('d')) - 1]
@@ -78,17 +78,16 @@ def get_impegnati(impegni: set, ora: arrow.Arrow) -> set:
                 impegnati[persona] = impegno.description
     return impegnati
 
-def main(file_orario, file_impegni, ora: str = arrow.now().format('YYYY-MM-DD HH:mm')):
-    ora = arrow.get(ora)
+def main(file_orario, file_impegni, ora: arrow.Arrow = arrow.now()):
     impegni = get_impegni(Calendar(open(file_impegni).read()))
     orari_di_lavoro = load_orari(file_orario)
-    turni = turni_correnti(orari_di_lavoro, ora)
+    disponibilita = get_disponibilita(orari_di_lavoro, ora)
     impegnati = get_impegnati(impegni, ora)
 
     for persona in impegnati:
         turni[persona] = impegnati[persona]
 
-    print(turni)
+    print(disponibilita)
             
 if __name__ == "__main__":
     if(len(sys.argv) < 3):
@@ -97,4 +96,4 @@ if __name__ == "__main__":
         if(len(sys.argv) < 4):
             main(sys.argv[1], sys.argv[2])
         else:
-            main(sys.argv[1], sys.argv[2], sys.argv[3])
+            main(sys.argv[1], sys.argv[2], arrow.get(sys.argv[3]))
