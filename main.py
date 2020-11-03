@@ -85,7 +85,7 @@ def main(file_orario, file_impegni, ora: arrow.Arrow = arrow.now()):
     impegnati = get_impegnati(impegni, ora)
 
     for persona in impegnati:
-        turni[persona] = impegnati[persona]
+        disponibilita[persona] = impegnati[persona]
 
     print(disponibilita)
             
