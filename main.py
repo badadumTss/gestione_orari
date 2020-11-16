@@ -29,7 +29,8 @@ def check_disponibilita(presenti_giorno: set, ora: arrow.Arrow, lista_persone: l
     """Dalle persone di turno, l'ora indicata e la lista di tutte le
     persone ricava una mappa della disponibilità delle persone: chiave:
     nome persona, valore: stringa che indica il tipo di turno attivo"""
-    disponibilita = {}
+    str_non_disp = 'non disponibile'
+    disponibilita = {persona: str_non_disp for persona in lista_persone}
     for persona in presenti_giorno:
         nome_persona = persona[0]
         # Bruttino ma funziona
@@ -40,7 +41,7 @@ def check_disponibilita(presenti_giorno: set, ora: arrow.Arrow, lista_persone: l
             if ora >= inizio_turno and ora < fine_turno:
                 disponibilita[nome_persona] = turno['details']
             elif nome_persona not in disponibilita:
-                disponibilita[nome_persona] = 'non disponibile'
+                disponibilita[nome_persona] = str_non_disp
     return disponibilita
 
 def get_disponibilita(orari_di_lavoro: set, ora: arrow.Arrow) -> list:
